@@ -1,0 +1,67 @@
+#
+# spec file for package lyra-firefox-ext
+#
+# Copyright (c) 2026 Rodrigo Brito
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+
+%global ext_id lyra-downloads@lyraos.com.br
+
+Name:           lyra-firefox-ext
+Version:        0.1.0
+Release:        0
+Summary:        Lyra Downloads integration extension for Firefox
+License:        GPL-3.0-or-later
+Group:          Productivity/Networking/Web/Browsers
+URL:            https://github.com/lyra-os-linux/lyra-firefox-ext
+# Código-fonte correspondente (git archive da revisão assinada).
+Source0:        %{name}-%{version}.tar.zst
+# XPI assinado pela Mozilla (AMO, canal unlisted) gerado por scripts/sign.sh
+# a partir da mesma revisão; não pode ser reconstruído no OBS sem invalidar
+# a assinatura.
+Source1:        %{ext_id}-%{version}.xpi
+BuildRequires:  python3
+BuildRequires:  unzip
+BuildRequires:  zstd
+Requires:       MozillaFirefox >= 140
+Requires:       lyra-downloads-firefox-integration
+BuildArch:      noarch
+
+%description
+Firefox extension that sends downloads to Lyra Downloads through its native
+messaging host. The package ships the Mozilla-signed XPI in
+%{_datadir}/%{name}; Lyra OS installs it through a Firefox enterprise policy
+(ExtensionSettings) provided by the desktop image.
+
+%prep
+%autosetup -p1
+
+%build
+# Nada a compilar: o artefato distribuído é o XPI assinado (Source1).
+
+%install
+install -D -m 0644 %{SOURCE1} %{buildroot}%{_datadir}/%{name}/%{ext_id}.xpi
+
+%check
+xpi=%{buildroot}%{_datadir}/%{name}/%{ext_id}.xpi
+unzip -l "$xpi" | grep -Eq 'META-INF/(mozilla\.rsa|cose\.sig)'
+unzip -p "$xpi" manifest.json | python3 -c '
+import json, sys
+m = json.load(sys.stdin)
+assert m["browser_specific_settings"]["gecko"]["id"] == "%{ext_id}", "id"
+assert m["version"] == "%{version}", "version"
+'
+# O manifesto do XPI assinado deve ser o mesmo da revisão empacotada.
+unzip -p "$xpi" manifest.json | cmp - static/manifest.json
+
+%files
+%license LICENSE
+%doc README.md
+%dir %{_datadir}/%{name}
+%{_datadir}/%{name}/%{ext_id}.xpi
+
+%changelog

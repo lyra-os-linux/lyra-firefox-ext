@@ -1,0 +1,8 @@
+-------------------------------------------------------------------
+Fri Sep 18 19:54:36 UTC 2026 - rodrigo@lyraos.com.br
+
+- Initial package of the Lyra Downloads Firefox extension 0.1.0
+  (lyra-downloads@lyraos.com.br), split from lyra-downloads:
+  * Mozilla-signed XPI (AMO unlisted) installed in
+    /usr/share/lyra-firefox-ext, activated by the Lyra desktop
+    Firefox policy (ExtensionSettings).
