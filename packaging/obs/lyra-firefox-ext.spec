@@ -55,8 +55,11 @@ m = json.load(sys.stdin)
 assert m["browser_specific_settings"]["gecko"]["id"] == "%{ext_id}", "id"
 assert m["version"] == "%{version}", "version"
 '
-# O manifesto do XPI assinado deve ser o mesmo da revisão empacotada.
-unzip -p "$xpi" manifest.json | cmp - static/manifest.json
+# O manifesto do XPI assinado deve ter o mesmo conteúdo JSON da revisão
+# empacotada (o AMO só reformata o arquivo).
+unzip -p "$xpi" manifest.json > signed-manifest.json
+python3 -c 'import json,sys; sys.exit(json.load(open(sys.argv[1])) != json.load(open(sys.argv[2])))' \
+    signed-manifest.json static/manifest.json
 
 %files
 %license LICENSE

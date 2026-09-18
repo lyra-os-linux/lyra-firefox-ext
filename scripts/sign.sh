@@ -48,7 +48,13 @@ check="$(mktemp -d)"; trap 'rm -rf "$check"' EXIT
 unzip -q "${signed[0]}" -d "$check"
 [[ -f "$check/META-INF/mozilla.rsa" || -f "$check/META-INF/cose.sig" ]] || { echo "erro: XPI sem assinatura Mozilla" >&2; exit 2; }
 rm -rf "$check/META-INF"
-diff -r dist "$check" || { echo "erro: conteúdo assinado difere do build local" >&2; exit 2; }
+# O AMO reformata o manifest.json (mesmo conteúdo JSON); o web-ext deixa
+# .amo-upload-uuid em dist, fora do XPI. Todo o resto deve ser idêntico.
+diff -r --exclude=manifest.json --exclude=.amo-upload-uuid dist "$check" \
+    || { echo "erro: conteúdo assinado difere do build local" >&2; exit 2; }
+python3 -c 'import json,sys; sys.exit(json.load(open(sys.argv[1])) != json.load(open(sys.argv[2])))' \
+    dist/manifest.json "$check/manifest.json" \
+    || { echo "erro: manifest.json assinado difere do build local" >&2; exit 2; }
 
 out="packaging/obs/out"; mkdir -p "$out"
 cp "${signed[0]}" "$out/$id-$version.xpi"
