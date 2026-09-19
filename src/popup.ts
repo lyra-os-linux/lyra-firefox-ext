@@ -66,7 +66,8 @@ async function refreshEntries(): Promise<void> {
   const entries = (await browser.runtime.sendMessage({ type: "entries" })) as HandoffEntry[];
   list.replaceChildren();
   document.getElementById("entries-section")!.hidden = entries.length === 0;
-  for (const e of entries.slice(0, 5)) {
+  const visible = entries.filter((e, i) => i < 5 || e.canRecover || e.canRestart);
+  for (const e of visible) {
     const li = document.createElement("li");
     const name = document.createElement("strong");
     name.textContent = e.filename || e.url;
@@ -74,12 +75,17 @@ async function refreshEntries(): Promise<void> {
     const msg = document.createElement("p");
     msg.textContent = e.message;
     li.append(name, msg);
-    if (e.canRestart) {
+    if (e.canRestart || e.canRecover) {
       const b = document.createElement("button");
-      b.textContent = t("restartInFirefox");
+      b.textContent = e.canRecover ? t("recoverInFirefox") : t("restartInFirefox");
       b.addEventListener("click", async () => {
-        await browser.runtime.sendMessage({ type: "restart", requestId: e.requestId });
-        await refreshEntries();
+        b.disabled = true;
+        try {
+          await browser.runtime.sendMessage({ type: e.canRecover ? "recover" : "restart", requestId: e.requestId });
+          await refreshEntries();
+        } catch {
+          msg.textContent = t("errRecovery");
+        } finally { b.disabled = false; }
       });
       li.append(b);
     }

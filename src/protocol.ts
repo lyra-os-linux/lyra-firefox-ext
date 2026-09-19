@@ -43,11 +43,11 @@ export async function callHost(
   const timeout = new Promise<HostResult>((resolve) => {
     timer = setTimeout(() => resolve({ kind: "timeout" }), timeoutMs);
   });
-  const call = send(HOST_NAME, msg).then(
+  const call = Promise.resolve().then(() => send(HOST_NAME, msg)).then(
     (raw): HostResult => {
       const r = raw as HostResponse;
       if (!r || typeof r !== "object") return { kind: "error", code: "invalid_response", message: "Resposta inválida do componente de integração." };
-      if (r.request_id !== null && r.request_id !== requestId) {
+      if (r.v !== PROTOCOL_VERSION || (r.request_id !== null && r.request_id !== requestId) || (r.ok && r.request_id !== requestId)) {
         return { kind: "error", code: "invalid_response", message: "Resposta de outra requisição." };
       }
       if (r.ok) return { kind: "ok", result: r.result };

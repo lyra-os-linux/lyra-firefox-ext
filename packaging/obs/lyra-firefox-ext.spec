@@ -12,7 +12,7 @@
 %global ext_id lyra-downloads@lyraos.com.br
 
 Name:           lyra-firefox-ext
-Version:        0.1.0
+Version:        0.1.1
 Release:        0
 Summary:        Lyra Downloads integration extension for Firefox
 License:        GPL-3.0-or-later
@@ -24,11 +24,13 @@ Source0:        %{name}-%{version}.tar.zst
 # a partir da mesma revisão; não pode ser reconstruído no OBS sem invalidar
 # a assinatura.
 Source1:        %{ext_id}-%{version}.xpi
+# Comprovante de revisão, fontes e conteúdo conferidos na assinatura.
+Source2:        %{ext_id}-%{version}.provenance.json
 BuildRequires:  python3
 BuildRequires:  unzip
 BuildRequires:  zstd
 Requires:       MozillaFirefox >= 140
-Requires:       lyra-downloads-firefox-integration
+Requires:       lyra-downloads-firefox-integration >= 0.1.1
 BuildArch:      noarch
 
 %description
@@ -47,6 +49,8 @@ messaging host. The package ships the Mozilla-signed XPI in
 install -D -m 0644 %{SOURCE1} %{buildroot}%{_datadir}/%{name}/%{ext_id}.xpi
 
 %check
+python3 scripts/verify-xpi.py verify --source . \
+    --xpi %{SOURCE1} --receipt %{SOURCE2}
 xpi=%{buildroot}%{_datadir}/%{name}/%{ext_id}.xpi
 unzip -l "$xpi" | grep -Eq 'META-INF/(mozilla\.rsa|cose\.sig)'
 unzip -p "$xpi" manifest.json | python3 -c '

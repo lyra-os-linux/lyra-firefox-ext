@@ -2,3 +2,4 @@
 /dist/
 /artifacts/
 /packaging/obs/out/
+__pycache__/

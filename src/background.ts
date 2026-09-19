@@ -8,7 +8,7 @@ import { loadSettings, t } from "./settings.js";
 
 const MENU_ID = "lyra-send-link";
 let settings: Settings = DEFAULT_SETTINGS;
-const ready = loadSettings().then((s) => (settings = s));
+const settingsReady = loadSettings().then((s) => (settings = s));
 browser.storage.onChanged.addListener((changes, area) => {
   if (area === "local" && changes.settings) settings = { ...DEFAULT_SETTINGS, ...changes.settings.newValue };
 });
@@ -58,11 +58,12 @@ browser.menus.onClicked.addListener(async (info) => {
 const tracker = new RequestTracker();
 
 function badge(entries: HandoffEntry[]): void {
-  const problem = entries.some((e) => e.state === "parado_no_firefox" || e.state === "pausado_no_firefox");
+  const problem = entries.some((e) => e.state === "parado_no_firefox" || e.state === "pausado_no_firefox" || e.canRecover);
   void browser.action.setBadgeText({ text: problem ? "!" : "" });
   if (problem) void browser.action.setBadgeBackgroundColor({ color: "#c01c28" });
 }
 
+let storageWrites = Promise.resolve();
 const manager = new HandoffManager({
   pause: (id) => browser.downloads.pause(id),
   resume: (id) => browser.downloads.resume(id),
@@ -71,13 +72,18 @@ const manager = new HandoffManager({
     await browser.downloads.erase({ id });
   },
   startDownload: (url) => browser.downloads.download({ url, conflictAction: "uniquify" }),
+  getDownload: async (id) => (await browser.downloads.search({ id }))[0],
   call: (requestId, op, timeoutMs) => callHost(sendNative, requestId, op, timeoutMs),
   newId: newRequestId,
   now: Date.now,
-  changed: (entries) => {
-    badge(entries);
-    void browser.storage.session.set({ entries });
+  changed: (snapshot) => {
+    storageWrites = storageWrites.catch(() => {}).then(() => browser.storage.session.set({ handoff: snapshot }));
+    return storageWrites.then(() => badge(snapshot.entries));
   },
+});
+const ready = Promise.all([settingsReady, browser.storage.session.get(["handoff", "entries"])]).then(([, saved]) => {
+  manager.restore(saved.handoff ?? { entries: saved.entries ?? [] });
+  badge(manager.entries);
 });
 
 function onDownloadCreated(item: browser.downloads.DownloadItem): void {
@@ -98,7 +104,7 @@ function onDownloadCreated(item: browser.downloads.DownloadItem): void {
     }
     const entry = await manager.handoff(info);
     if (entry.state === "repassado" && settings.showApp) void host({ op: "open_app" }, 4000);
-  });
+  }).catch(() => notify("Não foi possível concluir o repasse. Confira o painel de downloads do Firefox e tente novamente."));
 }
 
 function onSendHeaders(d: browser.webRequest._OnSendHeadersDetails): void {
@@ -138,6 +144,7 @@ type UiMessage =
   | { type: "settings" }
   | { type: "open-app" }
   | { type: "entries" }
+  | { type: "recover"; requestId: string }
   | { type: "restart"; requestId: string };
 
 browser.runtime.onMessage.addListener((raw: unknown, sender) => {
@@ -151,9 +158,11 @@ browser.runtime.onMessage.addListener((raw: unknown, sender) => {
     case "open-app":
       return host({ op: "open_app" }, 4000);
     case "entries":
-      return Promise.resolve(manager.entries);
+      return ready.then(() => manager.entries);
     case "restart":
-      return manager.restartInFirefox(msg.requestId);
+      return ready.then(() => manager.restartInFirefox(msg.requestId));
+    case "recover":
+      return ready.then(() => manager.recoverInFirefox(msg.requestId));
     default:
       return undefined;
   }

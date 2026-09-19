@@ -23,6 +23,7 @@ if [[ -n "$(git status --porcelain)" ]]; then
     echo "erro: árvore com alterações; assine a partir de um commit limpo" >&2
     exit 2
 fi
+source_revision="$(git rev-parse HEAD)"
 
 id="$(python3 -c 'import json;print(json.load(open("static/manifest.json"))["browser_specific_settings"]["gecko"]["id"])')"
 version="$(python3 -c 'import json;print(json.load(open("static/manifest.json"))["version"])')"
@@ -44,19 +45,13 @@ shopt -s nullglob
 signed=(artifacts/*.xpi)
 [[ ${#signed[@]} -eq 1 ]] || { echo "erro: esperado 1 XPI assinado, achei ${#signed[@]}" >&2; exit 2; }
 
-check="$(mktemp -d)"; trap 'rm -rf "$check"' EXIT
-unzip -q "${signed[0]}" -d "$check"
-[[ -f "$check/META-INF/mozilla.rsa" || -f "$check/META-INF/cose.sig" ]] || { echo "erro: XPI sem assinatura Mozilla" >&2; exit 2; }
-rm -rf "$check/META-INF"
-# O AMO reformata o manifest.json (mesmo conteúdo JSON); o web-ext deixa
-# .amo-upload-uuid em dist, fora do XPI. Todo o resto deve ser idêntico.
-diff -r --exclude=manifest.json --exclude=.amo-upload-uuid dist "$check" \
-    || { echo "erro: conteúdo assinado difere do build local" >&2; exit 2; }
-python3 -c 'import json,sys; sys.exit(json.load(open(sys.argv[1])) != json.load(open(sys.argv[2])))' \
-    dist/manifest.json "$check/manifest.json" \
-    || { echo "erro: manifest.json assinado difere do build local" >&2; exit 2; }
+[[ "$(git rev-parse HEAD)" == "$source_revision" && -z "$(git status --porcelain)" ]] \
+    || { echo "erro: fontes mudaram durante a assinatura" >&2; exit 2; }
 
 out="packaging/obs/out"; mkdir -p "$out"
+python3 scripts/verify-xpi.py record --source . --dist dist \
+    --xpi "${signed[0]}" --revision "$source_revision" \
+    --receipt "$out/$id-$version.provenance.json"
 cp "${signed[0]}" "$out/$id-$version.xpi"
 ( cd "$out" && sha256sum "$id-$version.xpi" )
 echo "revisão: $(git rev-parse HEAD)"

@@ -107,6 +107,7 @@ function harness(script) {
     cancel: async (id) => { log.push(`cancel ${id}`); if (script.cancelFails) throw new Error("nope"); },
     erase: async (id) => { log.push(`erase ${id}`); },
     startDownload: async (url) => { log.push(`start ${url}`); return 99; },
+    getDownload: async () => script.currentDownload,
     call: async (rid, op) => {
       calls.push([rid, op.op]);
       const r = script.responses.shift();
@@ -118,6 +119,7 @@ function harness(script) {
   };
   return { m: new HandoffManager(deps), log, calls };
 }
+const revoked = { kind: "ok", result: { revoked: true, completed: false } };
 const accepted = { kind: "ok", result: { status: "accepted", task: { task_id: "t1" } } };
 
 test("repasse aceito: pausa, confirma, só então cancela e apaga", async () => {
@@ -150,7 +152,7 @@ test("timeout seguido de aceite no reenvio com o MESMO request_id", async () => 
 });
 
 test("timeout duplo: desiste no backend (cancel_handoff) e retoma no Firefox", async () => {
-  const h = harness({ responses: [{ kind: "timeout" }, { kind: "timeout" }, { kind: "ok", result: {} }] });
+  const h = harness({ responses: [{ kind: "timeout" }, { kind: "timeout" }, revoked] });
   const e = await h.m.handoff(item());
   assert.deepEqual(h.calls.map((c) => c[1]), ["handoff", "handoff", "cancel_handoff"]);
   assert.equal(e.state, "mantido_no_firefox");
@@ -171,7 +173,7 @@ test("falha ao cancelar após aceite: cópia fica pausada e o usuário é avisad
 });
 
 test("falha ao retomar: oferece reinício explícito, protegido contra recaptura", async () => {
-  const h = harness({ resumeFails: true, responses: [{ kind: "error", code: "backend_error", message: "x" }] });
+  const h = harness({ resumeFails: true, responses: [{ kind: "error", code: "invalid_url", message: "x" }] });
   const e = await h.m.handoff(item());
   assert.equal(e.state, "parado_no_firefox");
   assert.equal(e.canRestart, true);
@@ -187,7 +189,7 @@ test("resposta repetida/atrasada não altera um repasse já finalizado", async (
   const h = harness({ responses: [accepted] });
   const e = await h.m.handoff(item());
   // Simula uma finalização tardia (ex.: segunda resposta): o estado não muda.
-  h.m["finish"](e, "mantido_no_firefox", "tarde demais");
+  await h.m["finish"](e, "mantido_no_firefox", "tarde demais");
   assert.equal(e.state, "repassado");
 });
 
@@ -200,4 +202,116 @@ test("modo gerenciador padrão: todos os sites e qualquer tipo, mantendo as salv
   assert.equal(decide(item({ ...other, incognito: true }), all, rec({ url: other.url }), OWN).capture, false);
   assert.equal(decide(item(other), all, rec({ url: other.url, method: "POST" }), OWN).capture, false);
   assert.equal(decide(item(other), { ...all, autoCapture: false }, rec({ url: other.url }), OWN).capture, false, "desligado por padrão");
+});
+
+test("cancelamento incerto nunca retoma o Firefox, inclusive resposta de backend antigo", async () => {
+  for (const cancellation of [
+    { kind: "timeout" }, { kind: "host_missing", message: "ausente" },
+    { kind: "error", code: "backend_error", message: "erro" },
+    { kind: "ok", result: { found: false, cancelled: false } },
+    { kind: "ok", result: { revoked: true } },
+  ]) {
+    const h = harness({ responses: [{ kind: "timeout" }, { kind: "timeout" }, cancellation] });
+    const e = await h.m.handoff(item());
+    assert.equal(e.state, "repasse_incerto");
+    assert.equal(e.canRecover, true);
+    assert.equal(e.canRestart, false);
+    assert.deepEqual(h.log, ["pause 1"]);
+  }
+});
+
+test("falha de transporte depois do aceite exige reconciliação", async () => {
+  const h = harness({ responses: [{ kind: "error", code: "host_failed", message: "resposta perdida" }, revoked] });
+  await h.m.handoff(item());
+  assert.deepEqual(h.calls.map((c) => c[1]), ["handoff", "cancel_handoff"]);
+  assert.deepEqual(h.log, ["pause 1", "resume 1"]);
+});
+
+test("host ausente no reenvio não prova que a primeira tentativa falhou", async () => {
+  const h = harness({ responses: [{ kind: "timeout" }, { kind: "host_missing", message: "ausente" }, { kind: "timeout" }] });
+  const e = await h.m.handoff(item());
+  assert.equal(e.state, "repasse_incerto");
+  assert.deepEqual(h.log, ["pause 1"]);
+});
+
+test("recuperação restaurada confirma revogação antes de retomar", async () => {
+  const h = harness({ responses: [{ kind: "timeout" }, { kind: "timeout" }, { kind: "timeout" }] });
+  const e = await h.m.handoff(item());
+  const next = harness({ responses: [revoked] });
+  next.m.restore(h.m.snapshot());
+  assert.ok(next.m.isGuarded(item()));
+  assert.equal(next.m.entries[0].canRecover, true);
+  assert.ok(await next.m.recoverInFirefox(e.requestId));
+  assert.deepEqual(next.calls, [[e.requestId, "cancel_handoff"]]);
+  assert.deepEqual(next.log, ["resume 1"]);
+});
+
+test("download já concluído no Lyra cancela somente a cópia do Firefox", async () => {
+  const h = harness({ responses: [{ kind: "timeout" }, { kind: "timeout" }, { kind: "ok", result: { revoked: true, completed: true } }] });
+  const e = await h.m.handoff(item());
+  assert.equal(e.state, "repassado");
+  assert.deepEqual(h.log, ["pause 1", "cancel 1", "erase 1"]);
+});
+
+test("queda após aceite persistido não cancela a tarefa entregue ao Lyra", async () => {
+  const h = harness({ responses: [] });
+  h.m.restore({ entries: [{ requestId: "accepted", downloadId: 1, url: item().url, filename: "a.iso", state: "enviando", accepted: true, message: "", time: 1, canRestart: false }] });
+  assert.ok(await h.m.recoverInFirefox("accepted"));
+  assert.deepEqual(h.calls, []);
+  assert.deepEqual(h.log, ["cancel 1", "erase 1"]);
+});
+
+test("restaura entradas legadas e protege o reinício contra suspensão e clique duplo", async () => {
+  const h = harness({ responses: [] });
+  h.m.restore({ entries: [{ requestId: "legacy", downloadId: 1, url: item().url, filename: "a.iso", state: "parado_no_firefox", message: "", time: 1, canRestart: true }] });
+  const results = await Promise.all([h.m.restartInFirefox("legacy"), h.m.restartInFirefox("legacy")]);
+  assert.deepEqual(results, [true, false]);
+  const next = harness({ responses: [] });
+  next.m.restore(h.m.snapshot());
+  assert.ok(next.m.isGuarded(item({ id: 99 })));
+  assert.ok(next.m.isGuarded(item({ id: 123 })));
+  assert.equal(await next.m.restartInFirefox("legacy"), false);
+});
+
+test("entradas em andamento sobrevivem a uma nova página de fundo", async () => {
+  const h = harness({ responses: [revoked] });
+  h.m.restore({ entries: [{ requestId: "pending", downloadId: 1, url: item().url, filename: "a.iso", state: "enviando", message: "", time: 1, canRestart: false }] });
+  assert.equal(h.m.entries[0].state, "repasse_incerto");
+  await h.m.recoverInFirefox("pending");
+  assert.deepEqual(h.log, ["resume 1"]);
+});
+
+test("histórico cheio não descarta repasses que precisam de recuperação", async () => {
+  const h = harness({ responses: Array.from({ length: 66 }, () => ({ kind: "timeout" })) });
+  for (let id = 1; id <= 22; id++) await h.m.handoff(item({ id }));
+  assert.equal(h.m.entries.length, 22);
+  assert.ok(h.m.entries.every((e) => e.canRecover));
+});
+
+test("protocolo rejeita sucesso sem correlação e captura exceção síncrona do host", async () => {
+  const bad = await callHost(async () => ({ v: 1, request_id: null, ok: true }), "r", { op: "health" }, 100);
+  assert.equal(bad.kind, "error");
+  const failed = await callHost(() => { throw new Error("host exited"); }, "r", { op: "health" }, 100);
+  assert.equal(failed.kind, "error");
+});
+
+test("restaurar após uma retomada já aplicada não oferece download duplicado", async () => {
+  const h = harness({ responses: [revoked], resumeFails: true, currentDownload: { state: "in_progress", paused: false } });
+  h.m.restore({ entries: [{ requestId: "resumed", downloadId: 1, url: item().url, filename: "a.iso", state: "enviando", message: "", time: 1, canRestart: false }] });
+  await h.m.recoverInFirefox("resumed");
+  assert.equal(h.m.entries[0].state, "mantido_no_firefox");
+  assert.equal(h.m.entries[0].canRestart, false);
+});
+
+test("falha de persistência antes do repasse deixa a transferência original intacta", async () => {
+  const calls = [];
+  const m = new HandoffManager({
+    pause: async () => { calls.push("pause"); }, resume: async () => {}, cancel: async () => {}, erase: async () => {},
+    startDownload: async () => 1, getDownload: async () => undefined,
+    call: async () => { calls.push("handoff"); return accepted; },
+    newId: () => "storage-failure", now: () => 0,
+    changed: async () => { throw new Error("storage unavailable"); },
+  });
+  await assert.rejects(m.handoff(item()), /storage unavailable/);
+  assert.deepEqual(calls, []);
 });

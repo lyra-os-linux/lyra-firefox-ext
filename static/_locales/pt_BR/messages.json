@@ -1,4 +1,10 @@
 {
+  "errRecovery": {
+    "message": "Não foi possível concluir a recuperação. Tente novamente."
+  },
+  "recoverInFirefox": {
+    "message": "Recuperar no Firefox"
+  },
   "extName": {
     "message": "Lyra Downloads Integration"
   },

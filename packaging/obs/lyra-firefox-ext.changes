@@ -1,4 +1,13 @@
 -------------------------------------------------------------------
+Sat Sep 19 00:00:00 UTC 2026 - rodrigo@lyraos.com.br
+
+- Update to 0.1.1:
+  * Keep uncertain handoffs paused until backend cancellation is confirmed.
+  * Restore session recovery entries and restart guards after suspension.
+  * Verify signed XPI provenance and all payload files before packaging.
+  * Require lyra-downloads-firefox-integration >= 0.1.1.
+
+-------------------------------------------------------------------
 Fri Sep 18 19:54:36 UTC 2026 - rodrigo@lyraos.com.br
 
 - Initial package of the Lyra Downloads Firefox extension 0.1.0
