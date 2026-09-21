@@ -25,11 +25,20 @@ class ThemeTests(unittest.TestCase):
         self.assertEqual(MANIFEST['default_locale'], 'en_US')
         self.assertEqual(MANIFEST['browser_specific_settings']['gecko']['id'], 'theme@lyraos.com.br')
         self.assertFalse({'permissions', 'background', 'content_scripts', 'theme_experiment', 'host_permissions'} & MANIFEST.keys())
-        self.assertTrue(all(p.suffix == '.json' for p in SOURCE.rglob('*') if p.is_file()))
+        self.assertTrue(all(p.suffix in {'.json', '.png'} for p in SOURCE.rglob('*') if p.is_file()))
         for locale in ('en_US', 'pt_BR', 'es_ES'):
             messages = json.loads((SOURCE / '_locales' / locale / 'messages.json').read_text())
             for field in ('name', 'description'):
                 self.assertTrue(messages[MANIFEST[field][6:-2]]['message'])
+
+    def test_header_art_is_local_static_png(self):
+        for mode in ('theme', 'dark_theme'):
+            theme = MANIFEST[mode]
+            self.assertEqual(theme['properties']['additional_backgrounds_tiling'], ['no-repeat'])
+            for name in theme['images']['additional_backgrounds']:
+                path = (SOURCE / name).resolve()
+                self.assertTrue(path.is_relative_to(SOURCE.resolve()))
+                self.assertEqual(path.read_bytes()[:8], b'\x89PNG\r\n\x1a\n')
 
     def test_distribution_uses_target_browser_directory(self):
         spec = (ROOT / 'theme/packaging/lyra-firefox-theme.spec').read_text()

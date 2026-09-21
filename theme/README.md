@@ -1,6 +1,6 @@
 # Lyra OS Firefox theme
 
-A standalone static theme, version 0.1.0, ID `theme@lyraos.com.br`.
+A standalone static theme, version 0.2.0, ID `theme@lyraos.com.br`.
 Light and dark palettes follow the system using Firefox's supported `theme`
 and `dark_theme` manifest keys. Requires Firefox 140 or later. The Downloads
 extension keeps its existing ID, version and permissions.
@@ -76,3 +76,27 @@ also passed. Public `lyra-firefox-theme-0.1.0-lp161.1.1.x86_64.rpm` has SHA-256
 `465810460a44cc48305ff1355d19f531dc8bca45e2f60509095b52f2f746f002`.
 Its signature is valid and its XPI matches the browser-tested Mozilla artifact.
 See [publication evidence](evidence/publication-20260921.json). No ISO was generated.
+
+## Odyssey header — 0.2.0
+
+The maintainer approved a discreet space motif (stars, planets, constellations)
+on 21 September 2026. Both modes use the same bundled transparent illustration,
+centered vertically and aligned right without tiling; toolbar colors stay opaque.
+The artwork was generated with the built-in imagegen tool for this project;
+see `evidence/odyssey-art-20260921.json` for provenance. No runtime generation,
+network access or additional permissions are introduced.
+
+Palette contrast tests measure solid color pairs. Artwork behind inactive tabs
+also requires visual review; light/dark previews on Firefox 140.13 were approved.
+Mozilla signed 0.2.0. Firefox 140.13 verified signedState=2 and explicit XPI
+updates preserved both the active Lyra theme and another selected theme.
+Removed themes were not restored; new profiles kept the default theme.
+See `evidence/odyssey-upgrade-20260921.json`.
+
+Replacing only the distribution RPM does not immediately update an existing
+profile on the same Firefox version: Firefox skips already processed distribution
+add-ons until an application upgrade. To test the update immediately, open
+about:addons, choose Install Add-on From File, and select
+`/usr/share/lyra-firefox-theme/theme@lyraos.com.br.xpi`.
+Do not modify user profiles or force theme selection to bypass this behavior.
+Release publication and exact-ISO qualification are separate gates.

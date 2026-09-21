@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Mon Sep 21 15:00:00 UTC 2026 - rodrigo@lyraos.com.br
+
+- Update to 0.2.0: add subtle space illustration to the tab strip.
+- Preserve approved light/dark palettes and existing theme choices.
+- Bundle a local transparent PNG; no new permissions or remote assets.
+
+-------------------------------------------------------------------
 Mon Sep 21 12:30:00 UTC 2026 - rodrigo@lyraos.com.br
 
 - Add standalone Lyra OS Firefox theme 0.1.0 with light/dark palettes.

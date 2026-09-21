@@ -1,0 +1,117 @@
+{
+  "selected_before": {
+    "theme": {
+      "active": true,
+      "signedState": 2,
+      "version": "0.1.0",
+      "permissions": 77
+    },
+    "activeTheme": "theme@lyraos.com.br",
+    "policies": {
+      "ExtensionSettings": {
+        "lyra-downloads@lyraos.com.br": {
+          "installation_mode": "normal_installed",
+          "install_url": "file:///usr/share/lyra-firefox-ext/lyra-downloads@lyraos.com.br.xpi"
+        }
+      }
+    }
+  },
+  "other_before": {
+    "theme": {
+      "active": false,
+      "signedState": 2,
+      "version": "0.1.0",
+      "permissions": 75
+    },
+    "activeTheme": "firefox-compact-dark@mozilla.org",
+    "policies": {
+      "ExtensionSettings": {
+        "lyra-downloads@lyraos.com.br": {
+          "installation_mode": "normal_installed",
+          "install_url": "file:///usr/share/lyra-firefox-ext/lyra-downloads@lyraos.com.br.xpi"
+        }
+      }
+    }
+  },
+  "same_firefox_restart": {
+    "theme": {
+      "active": true,
+      "signedState": 2,
+      "version": "0.1.0",
+      "permissions": 77
+    },
+    "activeTheme": "theme@lyraos.com.br",
+    "policies": {
+      "ExtensionSettings": {
+        "lyra-downloads@lyraos.com.br": {
+          "installation_mode": "normal_installed",
+          "install_url": "file:///usr/share/lyra-firefox-ext/lyra-downloads@lyraos.com.br.xpi"
+        }
+      }
+    }
+  },
+  "selected_after": {
+    "theme": {
+      "active": true,
+      "signedState": 2,
+      "version": "0.2.0",
+      "permissions": 77
+    },
+    "activeTheme": "theme@lyraos.com.br",
+    "policies": {
+      "ExtensionSettings": {
+        "lyra-downloads@lyraos.com.br": {
+          "installation_mode": "normal_installed",
+          "install_url": "file:///usr/share/lyra-firefox-ext/lyra-downloads@lyraos.com.br.xpi"
+        }
+      }
+    }
+  },
+  "other_after": {
+    "theme": {
+      "active": false,
+      "signedState": 2,
+      "version": "0.2.0",
+      "permissions": 75
+    },
+    "activeTheme": "firefox-compact-dark@mozilla.org",
+    "policies": {
+      "ExtensionSettings": {
+        "lyra-downloads@lyraos.com.br": {
+          "installation_mode": "normal_installed",
+          "install_url": "file:///usr/share/lyra-firefox-ext/lyra-downloads@lyraos.com.br.xpi"
+        }
+      }
+    }
+  },
+  "removed_after": {
+    "theme": null,
+    "activeTheme": "default-theme@mozilla.org",
+    "policies": {
+      "ExtensionSettings": {
+        "lyra-downloads@lyraos.com.br": {
+          "installation_mode": "normal_installed",
+          "install_url": "file:///usr/share/lyra-firefox-ext/lyra-downloads@lyraos.com.br.xpi"
+        }
+      }
+    }
+  },
+  "new_after": {
+    "theme": {
+      "active": false,
+      "signedState": 2,
+      "version": "0.2.0",
+      "permissions": 75
+    },
+    "activeTheme": "default-theme@mozilla.org",
+    "policies": {
+      "ExtensionSettings": {
+        "lyra-downloads@lyraos.com.br": {
+          "installation_mode": "normal_installed",
+          "install_url": "file:///usr/share/lyra-firefox-ext/lyra-downloads@lyraos.com.br.xpi"
+        }
+      }
+    }
+  },
+  "passed": true
+}
