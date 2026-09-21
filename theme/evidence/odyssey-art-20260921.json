@@ -1,0 +1,11 @@
+{
+  "date": "2026-09-21",
+  "tool": "OpenAI built-in imagegen",
+  "intent": "Original subtle space illustration for Firefox tab strip",
+  "user_approved": "Keep discreet intensity in light and dark previews",
+  "file": "theme/static/images/odyssey-v1.png",
+  "sha256": "5a71c29d2180e816f6767c5166bedcc1241d1b7eb1199110fc4e73f34043aec7",
+  "bytes": 127205,
+  "source_image": "exec-a41de42a-803d-484b-a2ba-ff28a9ca2705.png",
+  "processing": "Copied without pixel edits; positioned by Firefox theme manifest"
+}

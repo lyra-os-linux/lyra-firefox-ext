@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "__MSG_themeName__",
   "description": "__MSG_themeDescription__",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "default_locale": "en_US",
   "author": "Lyra OS",
   "browser_specific_settings": {
@@ -48,6 +48,19 @@
       "sidebar_highlight_text": "#ffffff",
       "ntp_background": "#f6f8fc",
       "ntp_text": "#111925"
+    },
+    "images": {
+      "additional_backgrounds": [
+        "images/odyssey-v1.png"
+      ]
+    },
+    "properties": {
+      "additional_backgrounds_alignment": [
+        "right center"
+      ],
+      "additional_backgrounds_tiling": [
+        "no-repeat"
+      ]
     }
   },
   "dark_theme": {
@@ -87,6 +100,19 @@
       "sidebar_highlight_text": "#0b1018",
       "ntp_background": "#0b1018",
       "ntp_text": "#e7edf6"
+    },
+    "images": {
+      "additional_backgrounds": [
+        "images/odyssey-v1.png"
+      ]
+    },
+    "properties": {
+      "additional_backgrounds_alignment": [
+        "right center"
+      ],
+      "additional_backgrounds_tiling": [
+        "no-repeat"
+      ]
     }
   }
 }

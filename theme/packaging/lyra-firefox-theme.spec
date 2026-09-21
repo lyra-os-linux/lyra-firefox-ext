@@ -2,7 +2,7 @@
 %global firefox_dist /usr/lib64/firefox/distribution
 
 Name:           lyra-firefox-theme
-Version:        0.1.0
+Version:        0.2.0
 Release:        0
 Summary:        Lyra OS light and dark theme for Firefox
 License:        GPL-3.0-or-later
