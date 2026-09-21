@@ -1,4 +1,4 @@
-# Lyra Alpha 8 targets x86_64; noarch _libdir on OBS expands to /usr/lib.
+# The payload is static, but distribution integration targets x86_64 Firefox.
 %global firefox_dist /usr/lib64/firefox/distribution
 
 Name:           lyra-firefox-theme
@@ -11,7 +11,7 @@ Source0:        %{name}-%{version}.tar.zst
 Source1:        theme@lyraos.com.br-%{version}.xpi
 BuildRequires:  python3
 BuildRequires:  zstd
-BuildArch:      noarch
+ExclusiveArch:  x86_64
 Requires:       MozillaFirefox >= 140
 
 %description

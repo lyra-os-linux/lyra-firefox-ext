@@ -28,7 +28,7 @@ the target Firefox must accept the signed XPI before publication.
 `theme/packaging/lyra-firefox-theme.spec` packages the XPI unchanged in
 `/usr/share/lyra-firefox-theme/theme@lyraos.com.br.xpi`.
 
-The image includes this RPM. The RPM exposes the signed XPI through Firefox's
+The image includes this x86_64 integration RPM (the XPI itself is portable). The RPM exposes the signed XPI through Firefox's
 `distribution/extensions/theme@lyraos.com.br.xpi` directory, as a symlink to the
 unchanged XPI in `/usr/share/lyra-firefox-theme`. Firefox offers the theme under
 Add-ons and themes without selecting it. New profiles retain Firefox's default;

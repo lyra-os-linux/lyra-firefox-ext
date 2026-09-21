@@ -35,6 +35,8 @@ class ThemeTests(unittest.TestCase):
         spec = (ROOT / 'theme/packaging/lyra-firefox-theme.spec').read_text()
         self.assertIn('%global firefox_dist /usr/lib64/firefox/distribution', spec)
         self.assertNotIn('%{_libdir}', spec)
+        self.assertIn('ExclusiveArch:  x86_64', spec)
+        self.assertNotIn('BuildArch:      noarch', spec)
         self.assertIn('extensions/theme@lyraos.com.br.xpi', spec)
         self.assertNotIn('force_installed', spec)
 
