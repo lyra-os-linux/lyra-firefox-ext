@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "checks": [
+    "automatic capture leaves one Lyra task and removes Firefox entry",
+    "actual event-page suspension and session restore",
+    "seeded lost-reply crash boundary recovered through actual extension/native host",
+    "late duplicate rejected after recovery"
+  ],
+  "failures": [],
+  "payload_sha256": "5bad9e43c4c27d633c39725473b45cf189e0baea9b8553715e6bf06e3a753b0a",
+  "expected_native_version": "0.1.2",
+  "theme": {
+    "id": "theme@lyraos.com.br",
+    "active": true,
+    "signedState": 2
+  },
+  "extension_version": "0.1.1",
+  "extension_signed_state": 2,
+  "scope": "Firefox ESR140.13 temporary profile with signed theme active; native host/backend0.1.2. Harness reloads Downloads after injecting optional permissions; capture and recovery use real extension/backend."
+}

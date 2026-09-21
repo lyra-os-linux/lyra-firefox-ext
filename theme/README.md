@@ -56,7 +56,9 @@ Unit tests check text contrast >= 4.5:1, focus >= 3:1, locales and payload integ
 The maintainer approved both palettes on 21/09/2026. Mozilla signed 0.1.0;
 Firefox verified signedState=2. Signed distribution-profile evidence is in
 `evidence/distribution-20260921.json`. Before candidate release: keyboard focus,
-100%/200% scaling, menus, Downloads handoff and version upgrades as applicable.
+100%/200% scaling, menus and version upgrades as applicable. Downloads handoff,
+final-file preservation, event-page suspension and lost-reply recovery passed
+with the signed theme active (`evidence/downloads-20260921.json`).
 After the Alpha 8 audit, qualify the exact ISO and record its checksum; keep
 issue #1 open until those criteria pass. Revert by removing the theme package from the image and selecting Firefox's default theme; preserve
 profiles, browsing data and the Downloads extension.
