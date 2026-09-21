@@ -1,0 +1,252 @@
+{
+  "errRecovery": {
+    "message": "No se pudo completar la recuperación. Inténtalo de nuevo."
+  },
+  "recoverInFirefox": {
+    "message": "Recuperar en Firefox"
+  },
+  "extName": {
+    "message": "Lyra Downloads Integration"
+  },
+  "extDescription": {
+    "message": "Envía enlaces y, opcionalmente, descargas de Firefox a Lyra Downloads."
+  },
+  "actionTitle": {
+    "message": "Lyra Downloads"
+  },
+  "menuSendLink": {
+    "message": "Descargar con Lyra Downloads"
+  },
+  "statusConnected": {
+    "message": "Conectado"
+  },
+  "statusUnavailable": {
+    "message": "Aplicación no disponible"
+  },
+  "statusEngineStopped": {
+    "message": "El motor de descargas no está en ejecución."
+  },
+  "statusChecking": {
+    "message": "Comprobando…"
+  },
+  "openApp": {
+    "message": "Abrir Lyra Downloads"
+  },
+  "openOptions": {
+    "message": "Configuración de la extensión"
+  },
+  "recentHandoffs": {
+    "message": "Transferencias recientes"
+  },
+  "restartInFirefox": {
+    "message": "Reiniciar en Firefox"
+  },
+  "errInvalidLink": {
+    "message": "El enlace no es una dirección válida."
+  },
+  "errOnlyHttp": {
+    "message": "Solo se pueden enviar enlaces http:// y https:// a Lyra Downloads."
+  },
+  "errTimeout": {
+    "message": "Lyra Downloads no respondió a tiempo."
+  },
+  "optionsTitle": {
+    "message": "Lyra Downloads Integration — configuración"
+  },
+  "manualTitle": {
+    "message": "Envío manual"
+  },
+  "manualHelp": {
+    "message": "Haz clic derecho en un enlace y elige «Descargar con Lyra Downloads». La aplicación abre el diálogo de nueva descarga; si cancelas, no se crea nada."
+  },
+  "autoEnable": {
+    "message": "Usar Lyra Downloads para las descargas de Firefox"
+  },
+  "autoHelp": {
+    "message": "Desactivado de forma predeterminada. Al activarlo, las descargas iniciadas en Firefox se transfieren a Lyra Downloads, y Firefox solo cancela su copia cuando Lyra lo confirma. Siempre permanecen en Firefox las ventanas privadas, las descargas con POST o autenticación, blob:/data:, las descargas que Firefox no puede pausar y, de forma predeterminada, las que envían cookies. Al activarlo, Firefox solicita permiso para supervisar las peticiones de los sitios seleccionados. Puedes desactivarlo aquí o desde el botón de la extensión en cualquier momento."
+  },
+  "domainsTitle": {
+    "message": "Sitios"
+  },
+  "domainColumn": {
+    "message": "Dominio (incluye subdominios)"
+  },
+  "cookiesColumn": {
+    "message": "Capturar incluso con cookies"
+  },
+  "cookiesHelp": {
+    "message": "Lyra Downloads no recibe tus cookies. Las descargas de sitios donde has iniciado sesión pueden fallar en Lyra (la copia de Firefox ya se habrá cancelado). Déjalo desmarcado si tienes dudas."
+  },
+  "noRules": {
+    "message": "No se han añadido sitios."
+  },
+  "addDomain": {
+    "message": "Añadir"
+  },
+  "remove": {
+    "message": "Quitar"
+  },
+  "allowCookiesFor": {
+    "message": "Capturar incluso con cookies en $DOMAIN$",
+    "placeholders": {
+      "domain": {
+        "content": "$1"
+      }
+    }
+  },
+  "extensionsTitle": {
+    "message": "Tipos de archivo"
+  },
+  "extensionsHelp": {
+    "message": "Extensiones separadas por comas. Se usa el nombre que Firefox asignó al archivo (incluido Content-Disposition), no solo el final de la dirección."
+  },
+  "resetExtensions": {
+    "message": "Restaurar valores predeterminados"
+  },
+  "save": {
+    "message": "Guardar"
+  },
+  "saved": {
+    "message": "Configuración guardada."
+  },
+  "errInvalidDomain": {
+    "message": "Introduce un dominio válido, por ejemplo: sourceforge.net"
+  },
+  "errInvalidExtensions": {
+    "message": "Introduce extensiones válidas, por ejemplo: iso, img, zip"
+  },
+  "errNeedDomain": {
+    "message": "Añade al menos un sitio en la configuración o elige «Todos los sitios»."
+  },
+  "errPermissionDenied": {
+    "message": "Permiso denegado; no se usará Lyra Downloads para las descargas de Firefox."
+  },
+  "defaultTitle": {
+    "message": "Lyra Downloads como gestor de descargas"
+  },
+  "scopeTitle": {
+    "message": "Sitios"
+  },
+  "scopeAll": {
+    "message": "Todos los sitios"
+  },
+  "scopeListed": {
+    "message": "Solo los sitios de la lista"
+  },
+  "cookiesAll": {
+    "message": "Capturar incluso cuando el navegador envíe cookies"
+  },
+  "anyType": {
+    "message": "Cualquier tipo de archivo"
+  },
+  "listedTypes": {
+    "message": "Solo los tipos de la lista"
+  },
+  "behaviorTitle": {
+    "message": "Comportamiento"
+  },
+  "showApp": {
+    "message": "Mostrar la ventana de Lyra Downloads al recibir una descarga"
+  },
+  "popupDefault": {
+    "message": "Usar Lyra Downloads para las descargas"
+  },
+  "popupDefaultOn": {
+    "message": "Activado: las nuevas descargas de Firefox irán a Lyra Downloads."
+  },
+  "popupDefaultOff": {
+    "message": "Desactivado: Firefox vuelve a gestionar las descargas."
+  },
+  "summaryAllSites": {
+    "message": "todos los sitios"
+  },
+  "summaryListedSites": {
+    "message": "$N$ sitio(s) en la lista",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "summaryAnyType": {
+    "message": "cualquier tipo"
+  },
+  "summaryListedTypes": {
+    "message": "tipos de la lista"
+  },
+  "errHandoff": {
+    "message": "No se pudo completar la transferencia. Revisa el panel de descargas de Firefox e inténtalo de nuevo."
+  },
+  "handoffUncertain": {
+    "message": "No se pudo confirmar qué aplicación está descargando. La copia de Firefox sigue en pausa. Usa «Recuperar en Firefox» para comprobarlo y continuar de forma segura."
+  },
+  "handoffSending": {
+    "message": "Enviando a Lyra Downloads…"
+  },
+  "handoffCleanup": {
+    "message": "Lyra Downloads se hizo cargo de la descarga, pero Firefox no pudo cancelar su copia en pausa. Elimínala desde el panel de descargas de Firefox."
+  },
+  "handoffSent": {
+    "message": "Enviado a Lyra Downloads."
+  },
+  "handoffInFirefox": {
+    "message": "La descarga ya está en Firefox."
+  },
+  "handoffResumeFailed": {
+    "message": "Firefox no pudo reanudar la descarga pausada. Usa «Reiniciar en Firefox» para empezar de nuevo."
+  },
+  "handoffResumed": {
+    "message": "La descarga continuó en Firefox."
+  },
+  "handoffCanceled": {
+    "message": "Se canceló la transferencia a Lyra Downloads."
+  },
+  "handoffPauseFailed": {
+    "message": "Firefox no pudo pausar esta descarga (o ya terminó); permanece en Firefox para evitar transferencias duplicadas."
+  },
+  "handoffRestartRequested": {
+    "message": "Reinicio solicitado en Firefox; revisa el panel de descargas."
+  },
+  "handoffRestartFailed": {
+    "message": "Firefox no pudo reiniciar la descarga. Inténtalo de nuevo."
+  },
+  "handoffRestarted": {
+    "message": "Descarga reiniciada en Firefox (desde el principio)."
+  },
+  "errInvalidResponse": {
+    "message": "Respuesta no válida del componente de integración."
+  },
+  "errWrongResponse": {
+    "message": "La respuesta pertenece a otra petición."
+  },
+  "errUnknown": {
+    "message": "Error desconocido."
+  },
+  "errHostMissing": {
+    "message": "Lyra Downloads o su componente de integración con Firefox no está instalado o registrado."
+  },
+  "errHostFailed": {
+    "message": "El componente de integración se detuvo inesperadamente."
+  },
+  "errNativeUrl": {
+    "message": "Solo se admiten direcciones HTTP o HTTPS válidas sin credenciales integradas."
+  },
+  "errNativeDestination": {
+    "message": "Compruebe la carpeta de destino en Lyra Downloads."
+  },
+  "errNativeApp": {
+    "message": "No se pudo abrir Lyra Downloads. Compruebe que la aplicación y su integración estén instaladas."
+  },
+  "errNativeVersion": {
+    "message": "La integración instalada es incompatible. Actualice Lyra Downloads y esta extensión."
+  },
+  "errNativeRequest": {
+    "message": "La integración rechazó la solicitud."
+  },
+  "errNativeBackend": {
+    "message": "Lyra Downloads no pudo completar la operación. Abra la aplicación para ver los detalles."
+  },
+  "uiLocale": {
+    "message": "es-ES"
+  }
+}

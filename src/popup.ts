@@ -53,7 +53,7 @@ async function refreshStatus(): Promise<void> {
     statusEl.textContent = t("statusConnected");
     statusEl.classList.add("ok");
     const b = res.result?.backend;
-    detailEl.textContent = b?.engine_running ? "" : (b?.engine_problem ?? t("statusEngineStopped"));
+    detailEl.textContent = b?.engine_running ? "" : t("statusEngineStopped");
   } else {
     statusEl.textContent = t("statusUnavailable");
     statusEl.classList.add("bad");

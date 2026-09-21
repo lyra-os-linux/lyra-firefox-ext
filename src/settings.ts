@@ -1,3 +1,5 @@
+import { t } from "./i18n.js";
+export { t } from "./i18n.js";
 import { DEFAULT_SETTINGS, requiredOrigins, type Settings } from "./rules.js";
 
 export async function loadSettings(): Promise<Settings> {
@@ -9,12 +11,9 @@ export async function saveSettings(s: Settings): Promise<void> {
   await browser.storage.local.set({ settings: s });
 }
 
-export function t(key: string, subs?: string | string[]): string {
-  return browser.i18n.getMessage(key, subs) || key;
-}
-
 /** Preenche elementos com `data-i18n="chave"`. */
 export function applyI18n(root: ParentNode = document): void {
+  document.documentElement.lang = t("uiLocale");
   root.querySelectorAll<HTMLElement>("[data-i18n]").forEach((el) => {
     el.textContent = t(el.dataset.i18n!);
   });

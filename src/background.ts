@@ -104,7 +104,7 @@ function onDownloadCreated(item: browser.downloads.DownloadItem): void {
     }
     const entry = await manager.handoff(info);
     if (entry.state === "repassado" && settings.showApp) void host({ op: "open_app" }, 4000);
-  }).catch(() => notify("Não foi possível concluir o repasse. Confira o painel de downloads do Firefox e tente novamente."));
+  }).catch(() => notify(t("errHandoff")));
 }
 
 function onSendHeaders(d: browser.webRequest._OnSendHeadersDetails): void {

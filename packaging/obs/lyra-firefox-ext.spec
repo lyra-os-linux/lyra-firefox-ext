@@ -12,7 +12,7 @@
 %global ext_id lyra-downloads@lyraos.com.br
 
 Name:           lyra-firefox-ext
-Version:        0.1.1
+Version:        0.1.2
 Release:        0
 Summary:        Lyra Downloads integration extension for Firefox
 License:        GPL-3.0-or-later
