@@ -67,3 +67,12 @@ References:
 - https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/theme
 - https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/dark_theme
 - https://extensionworkshop.com/documentation/publish/signing-and-distribution-overview/
+
+## Published package — 21 September 2026
+
+OBS request 1379465 promoted source digest
+`5c631127f463c5a6b9b09538a110bc65` after all staging gates passed. Release gates
+also passed. Public `lyra-firefox-theme-0.1.0-lp161.1.1.x86_64.rpm` has SHA-256
+`465810460a44cc48305ff1355d19f531dc8bca45e2f60509095b52f2f746f002`.
+Its signature is valid and its XPI matches the browser-tested Mozilla artifact.
+See [publication evidence](evidence/publication-20260921.json). No ISO was generated.
