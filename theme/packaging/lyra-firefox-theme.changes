@@ -3,4 +3,6 @@ Mon Sep 21 2026 - Rodrigo Brito
 
 - Add standalone Lyra OS Firefox theme 0.1.0 with light/dark palettes.
 - Include en-US, pt-BR and es-ES metadata; no scripts or permissions.
+- Use the native distribution directory of the x86_64 Firefox package,
+  preserving existing theme choices; do not use _libdir for noarch.
 - Verify signed payload against complete source before packaging.

@@ -31,6 +31,13 @@ class ThemeTests(unittest.TestCase):
             for field in ('name', 'description'):
                 self.assertTrue(messages[MANIFEST[field][6:-2]]['message'])
 
+    def test_distribution_uses_target_browser_directory(self):
+        spec = (ROOT / 'theme/packaging/lyra-firefox-theme.spec').read_text()
+        self.assertIn('%global firefox_dist /usr/lib64/firefox/distribution', spec)
+        self.assertNotIn('%{_libdir}', spec)
+        self.assertIn('extensions/theme@lyraos.com.br.xpi', spec)
+        self.assertNotIn('force_installed', spec)
+
     def test_text_and_focus_contrast(self):
         pairs = [('tab_text', 'tab_selected'), ('tab_background_text', 'frame'),
                  ('toolbar_text', 'toolbar'), ('toolbar_field_text', 'toolbar_field'),

@@ -1,3 +1,6 @@
+# Lyra Alpha 8 targets x86_64; noarch _libdir on OBS expands to /usr/lib.
+%global firefox_dist /usr/lib64/firefox/distribution
+
 Name:           lyra-firefox-theme
 Version:        0.1.0
 Release:        0
@@ -27,8 +30,8 @@ ability to select another theme or remove this one.
 %install
 install -Dm0644 %{SOURCE1} %{buildroot}%{_datadir}/%{name}/theme@lyraos.com.br.xpi
 
-install -d %{buildroot}%{_libdir}/firefox/distribution/extensions
-ln -s %{_datadir}/%{name}/theme@lyraos.com.br.xpi %{buildroot}%{_libdir}/firefox/distribution/extensions/theme@lyraos.com.br.xpi
+install -d %{buildroot}%{firefox_dist}/extensions
+ln -s %{_datadir}/%{name}/theme@lyraos.com.br.xpi %{buildroot}%{firefox_dist}/extensions/theme@lyraos.com.br.xpi
 
 %check
 python3 theme/scripts/verify.py --source theme/static --xpi %{SOURCE1}
@@ -38,7 +41,9 @@ python3 -c 'import json; assert json.load(open("theme/static/manifest.json"))["v
 %license LICENSE
 %doc theme/README.md
 %{_datadir}/%{name}/
-%dir %{_libdir}/firefox/distribution/extensions
-%{_libdir}/firefox/distribution/extensions/theme@lyraos.com.br.xpi
+%dir /usr/lib64/firefox
+%dir %{firefox_dist}
+%dir %{firefox_dist}/extensions
+%{firefox_dist}/extensions/theme@lyraos.com.br.xpi
 
 %changelog
