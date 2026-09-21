@@ -1,0 +1,46 @@
+{
+  "request": 1379465,
+  "accepted": true,
+  "release_srcmd5": "5c631127f463c5a6b9b09538a110bc65",
+  "url": "https://download.opensuse.org/repositories/home:/rodrigosbrito:/lyra/openSUSE_Leap_16.1/x86_64/lyra-firefox-theme-0.1.0-lp161.1.1.x86_64.rpm",
+  "rpm": "lyra-firefox-theme-0.1.0-lp161.1.1.x86_64.rpm",
+  "rpm_sha256": "465810460a44cc48305ff1355d19f531dc8bca45e2f60509095b52f2f746f002",
+  "rpm_signature": "    Header V3 RSA/SHA256 Signature, key ID 7edca82e: OK\n    Header SHA256 digest: OK\n    Header SHA1 digest: OK\n    Payload SHA256 digest: OK\n    V3 RSA/SHA256 Signature, key ID 7edca82e: OK\n    MD5 digest: OK",
+  "xpi_sha256": "bf54cc16c0fbda635b92d485775934919c2db5e47267dd1c0679e07b485e75f5",
+  "api_public_identical": true,
+  "disturl": "obs://build.opensuse.org/home:rodrigosbrito:lyra/openSUSE_Leap_16.1/5c631127f463c5a6b9b09538a110bc65-lyra-firefox-theme",
+  "staging": {
+    "staging_revision": 3,
+    "staging_srcmd5": "5c631127f463c5a6b9b09538a110bc65",
+    "packaging_revision": "9035fc0173f3a4045919480ebe96c4f09dee4ad1",
+    "signing_revision": "29e6d99663ce73c81b5a3e7683461bc1883df1c8",
+    "rpm": "lyra-firefox-theme-0.1.0-lp161.3.1.x86_64.rpm",
+    "rpm_sha256": "44498297e50dd4abef8c863a9e6ecb6e81146e467307059eb01b41002cb83ea1",
+    "rpm_signature_key": "7edca82e",
+    "rpm_signature": "valid",
+    "rpmlint": {
+      "errors": 0,
+      "warnings": 0
+    },
+    "xpi_sha256": "bf54cc16c0fbda635b92d485775934919c2db5e47267dd1c0679e07b485e75f5",
+    "distribution_link_resolves": true,
+    "firefox_signed_state": 2,
+    "profile_checks_passed": true,
+    "downloads_checks_passed": true,
+    "iso_qualified": false
+  },
+  "gates": {
+    "staging": [
+      "OK: home:rodrigosbrito:lyra:staging (21 source packages, all targets published)",
+      "OK: home:rodrigosbrito:vega:staging (6 source packages, all targets published)",
+      "OK: home:rodrigosbrito:fina:staging (1 source packages, all targets published)"
+    ],
+    "release": [
+      "OK: home:rodrigosbrito:lyra (21 source packages, all targets published)",
+      "OK: home:rodrigosbrito:vega (6 source packages, all targets published)",
+      "OK: home:rodrigosbrito:fina (1 source packages, all targets published)"
+    ]
+  },
+  "scope": "Component and published-package qualification; exact Alpha 8 candidate still pending",
+  "visual_approval": "Maintainer approved light/dark palettes on 2026-09-21"
+}

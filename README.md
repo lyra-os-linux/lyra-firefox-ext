@@ -88,3 +88,9 @@ o armazenamento da sessão é apagado ao fechar o Firefox.
 ## Licença
 
 GPL-3.0-or-later.
+
+## Tema do Firefox
+
+O [tema estático Lyra OS](theme/README.md) é um artefato separado, com cores
+claras/escuras e sem permissões. Sua versão e assinatura são independentes da
+extensão de Downloads.

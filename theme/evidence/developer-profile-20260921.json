@@ -1,0 +1,33 @@
+{
+  "firefox": "140.13.0",
+  "checks": [
+    "static theme installs and enables without permissions",
+    "system light/dark switch changes browser chrome colors",
+    "user can select another theme",
+    "theme can be removed"
+  ],
+  "colors": {
+    "light": {
+      "--lwt-accent-color": "rgb(231, 237, 246)",
+      "--toolbar-bgcolor": "rgb(246, 248, 252)",
+      "--toolbar-color": "rgb(17, 25, 37)",
+      "--toolbar-field-background-color": "rgb(255, 255, 255)",
+      "--toolbar-field-color": "rgb(17, 25, 37)",
+      "--lwt-text-color": "rgba(38, 54, 76)"
+    },
+    "dark": {
+      "--lwt-accent-color": "rgb(11, 16, 24)",
+      "--toolbar-bgcolor": "rgb(17, 25, 37)",
+      "--toolbar-color": "rgb(231, 237, 246)",
+      "--toolbar-field-background-color": "rgb(11, 16, 24)",
+      "--toolbar-field-color": "rgb(231, 237, 246)",
+      "--lwt-text-color": "rgba(170, 182, 200)"
+    }
+  },
+  "addon": {
+    "id": "theme@lyraos.com.br",
+    "type": "theme",
+    "active": true
+  },
+  "passed": true
+}

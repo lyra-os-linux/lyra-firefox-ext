@@ -1,0 +1,148 @@
+{
+  "existing_before": {
+    "theme": null,
+    "activeTheme": "firefox-compact-dark@mozilla.org",
+    "policies": {
+      "ExtensionSettings": {
+        "lyra-downloads@lyraos.com.br": {
+          "installation_mode": "normal_installed",
+          "install_url": "file:///usr/share/lyra-firefox-ext/lyra-downloads@lyraos.com.br.xpi"
+        }
+      }
+    }
+  },
+  "new_install": {
+    "theme": {
+      "active": false,
+      "signedState": 2,
+      "version": "0.1.0",
+      "permissions": 75
+    },
+    "activeTheme": "default-theme@mozilla.org",
+    "policies": {
+      "ExtensionSettings": {
+        "lyra-downloads@lyraos.com.br": {
+          "installation_mode": "normal_installed",
+          "install_url": "file:///usr/share/lyra-firefox-ext/lyra-downloads@lyraos.com.br.xpi"
+        }
+      }
+    }
+  },
+  "existing_install": {
+    "theme": {
+      "active": false,
+      "signedState": 2,
+      "version": "0.1.0",
+      "permissions": 75
+    },
+    "activeTheme": "firefox-compact-dark@mozilla.org",
+    "policies": {
+      "ExtensionSettings": {
+        "lyra-downloads@lyraos.com.br": {
+          "installation_mode": "normal_installed",
+          "install_url": "file:///usr/share/lyra-firefox-ext/lyra-downloads@lyraos.com.br.xpi"
+        }
+      }
+    }
+  },
+  "selected": {
+    "theme": {
+      "active": true,
+      "signedState": 2,
+      "version": "0.1.0",
+      "permissions": 77
+    },
+    "activeTheme": "theme@lyraos.com.br",
+    "policies": {
+      "ExtensionSettings": {
+        "lyra-downloads@lyraos.com.br": {
+          "installation_mode": "normal_installed",
+          "install_url": "file:///usr/share/lyra-firefox-ext/lyra-downloads@lyraos.com.br.xpi"
+        }
+      }
+    }
+  },
+  "restart": {
+    "theme": {
+      "active": true,
+      "signedState": 2,
+      "version": "0.1.0",
+      "permissions": 77
+    },
+    "activeTheme": "theme@lyraos.com.br",
+    "policies": {
+      "ExtensionSettings": {
+        "lyra-downloads@lyraos.com.br": {
+          "installation_mode": "normal_installed",
+          "install_url": "file:///usr/share/lyra-firefox-ext/lyra-downloads@lyraos.com.br.xpi"
+        }
+      }
+    }
+  },
+  "changed": {
+    "theme": {
+      "active": false,
+      "signedState": 2,
+      "version": "0.1.0",
+      "permissions": 75
+    },
+    "activeTheme": "firefox-compact-dark@mozilla.org",
+    "policies": {
+      "ExtensionSettings": {
+        "lyra-downloads@lyraos.com.br": {
+          "installation_mode": "normal_installed",
+          "install_url": "file:///usr/share/lyra-firefox-ext/lyra-downloads@lyraos.com.br.xpi"
+        }
+      }
+    }
+  },
+  "changed_restart": {
+    "theme": {
+      "active": false,
+      "signedState": 2,
+      "version": "0.1.0",
+      "permissions": 75
+    },
+    "activeTheme": "firefox-compact-dark@mozilla.org",
+    "policies": {
+      "ExtensionSettings": {
+        "lyra-downloads@lyraos.com.br": {
+          "installation_mode": "normal_installed",
+          "install_url": "file:///usr/share/lyra-firefox-ext/lyra-downloads@lyraos.com.br.xpi"
+        }
+      }
+    }
+  },
+  "removed": {
+    "theme": null,
+    "activeTheme": "firefox-compact-dark@mozilla.org",
+    "policies": {
+      "ExtensionSettings": {
+        "lyra-downloads@lyraos.com.br": {
+          "installation_mode": "normal_installed",
+          "install_url": "file:///usr/share/lyra-firefox-ext/lyra-downloads@lyraos.com.br.xpi"
+        }
+      }
+    }
+  },
+  "removed_restart": {
+    "theme": null,
+    "activeTheme": "firefox-compact-dark@mozilla.org",
+    "policies": {
+      "ExtensionSettings": {
+        "lyra-downloads@lyraos.com.br": {
+          "installation_mode": "normal_installed",
+          "install_url": "file:///usr/share/lyra-firefox-ext/lyra-downloads@lyraos.com.br.xpi"
+        }
+      }
+    }
+  },
+  "passed": true,
+  "method": "Firefox distribution/extensions, not ExtensionSettings",
+  "firefox": "140.13.0",
+  "xpi_sha256": "bf54cc16c0fbda635b92d485775934919c2db5e47267dd1c0679e07b485e75f5",
+  "limits": [
+    "Successor-version upgrade not tested; first theme release",
+    "Exact candidate ISO and full Downloads handoff still pending"
+  ]
+}
