@@ -88,4 +88,15 @@ network access or additional permissions are introduced.
 
 Palette contrast tests measure solid color pairs. Artwork behind inactive tabs
 also requires visual review; light/dark previews on Firefox 140.13 were approved.
-This revision still requires signed upgrade and release qualification.
+Mozilla signed 0.2.0. Firefox 140.13 verified signedState=2 and explicit XPI
+updates preserved both the active Lyra theme and another selected theme.
+Removed themes were not restored; new profiles kept the default theme.
+See `evidence/odyssey-upgrade-20260921.json`.
+
+Replacing only the distribution RPM does not immediately update an existing
+profile on the same Firefox version: Firefox skips already processed distribution
+add-ons until an application upgrade. To test the update immediately, open
+about:addons, choose Install Add-on From File, and select
+`/usr/share/lyra-firefox-theme/theme@lyraos.com.br.xpi`.
+Do not modify user profiles or force theme selection to bypass this behavior.
+Release publication and exact-ISO qualification are separate gates.
