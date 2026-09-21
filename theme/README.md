@@ -28,23 +28,22 @@ the target Firefox must accept the signed XPI before publication.
 `theme/packaging/lyra-firefox-theme.spec` packages the XPI unchanged in
 `/usr/share/lyra-firefox-theme/theme@lyraos.com.br.xpi`.
 
-The image should include this RPM and merge this entry into its existing
-`ExtensionSettings` policy (never replace the Downloads policy):
+The image includes this RPM. The RPM exposes the signed XPI through Firefox's
+`distribution/extensions/theme@lyraos.com.br.xpi` directory, as a symlink to the
+unchanged XPI in `/usr/share/lyra-firefox-theme`. Firefox offers the theme under
+Add-ons and themes without selecting it. New profiles retain Firefox's default;
+existing profiles retain their selected theme. No extra policy is needed.
 
-```json
-"theme@lyraos.com.br": {
-  "installation_mode": "normal_installed",
-  "install_url": "file:///usr/share/lyra-firefox-theme/theme@lyraos.com.br.xpi"
-}
-```
+Do not use `ExtensionSettings.normal_installed` for this theme: a real signed-XPI
+test on ESR 140.13 showed that policy activates the theme over existing user
+choices. The Downloads extension retains its separate, existing policy.
+Do not lock activeThemeID, edit user.js or copy user profiles.
 
-Use normal installation, never `force_installed`, activeThemeID locks, user.js,
-or profile copying. Existing theme choices must survive installation and
-updates. The user can select Lyra OS in Add-ons and themes, choose a different
-theme or remove it. Validate these behaviors with the signed package and image
-policy before merging the recipe. Removal/reinstallation semantics remain subject
-to Firefox's normal-installed policy; do not promise permanent suppression
-across a changed policy/version without testing it.
+The signed distribution mechanism passed new/existing-profile installation,
+selection, restart, switching away, removal and restart without resurrection.
+A new RPM replaces the bundled XPI; Firefox controls distribution add-on updates
+and preserves user-disabled state. Version-to-version upgrade must also be
+qualified when a successor theme version is introduced.
 
 ## Validation and release gates
 
@@ -54,12 +53,12 @@ light/dark, and allowed switching to a built-in theme and removal. This test doe
 not qualify signing, upgrade/policy behavior, the image or an existing real profile.
 Unit tests check text contrast >= 4.5:1, focus >= 3:1, locales and payload integrity.
 
-Before release: validate the signed XPI, policy installation in new/existing
-profiles, update, disable/remove and restart, keyboard focus, 100%/200% scaling,
-menus and Downloads coexistence. Obtain visual approval of both variants.
+The maintainer approved both palettes on 21/09/2026. Mozilla signed 0.1.0;
+Firefox verified signedState=2. Signed distribution-profile evidence is in
+`evidence/distribution-20260921.json`. Before candidate release: keyboard focus,
+100%/200% scaling, menus, Downloads handoff and version upgrades as applicable.
 After the Alpha 8 audit, qualify the exact ISO and record its checksum; keep
-issue #1 open until those criteria pass. Revert by removing the theme policy
-and package from the image and selecting Firefox's default theme; preserve
+issue #1 open until those criteria pass. Revert by removing the theme package from the image and selecting Firefox's default theme; preserve
 profiles, browsing data and the Downloads extension.
 
 References:

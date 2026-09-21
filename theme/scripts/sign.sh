@@ -10,11 +10,12 @@ version="$(python3 -c 'import json;print(json.load(open("theme/static/manifest.j
 out="theme/out/$version"
 [[ ! -e "$out" ]] || { echo 'Output already exists; do not overwrite a signed release.' >&2; exit 2; }
 mkdir -p "$out"
+cp -a theme/static "$out/source"
 web_ext="${WEB_EXT_BIN:-./node_modules/.bin/web-ext}"
 "$web_ext" lint --source-dir theme/static --self-hosted
 set -a; . "$creds"; set +a
 WEB_EXT_API_KEY="$AMO_JWT_ISSUER" WEB_EXT_API_SECRET="$AMO_JWT_SECRET" \
-    "$web_ext" sign --channel unlisted --source-dir theme/static --artifacts-dir "$out"
+    "$web_ext" sign --channel unlisted --source-dir "$out/source" --artifacts-dir "$out"
 unset AMO_JWT_ISSUER AMO_JWT_SECRET
 shopt -s nullglob
 signed=("$out"/*.xpi)
