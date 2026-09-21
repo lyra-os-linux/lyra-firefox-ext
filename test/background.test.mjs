@@ -8,6 +8,7 @@ test("UI aguarda leitura da sessão e recupera entrada ao recriar o background",
   const actions = [];
   const writes = [];
   globalThis.browser = {
+    i18n: { getMessage: (key) => key },
     storage: { onChanged: event(), local: { get: async () => ({}) }, session: {
       get: () => saved, set: async (value) => { writes.push(structuredClone(value)); },
     } },

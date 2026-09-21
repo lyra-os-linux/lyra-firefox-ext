@@ -315,3 +315,28 @@ test("falha de persistência antes do repasse deixa a transferência original in
   await assert.rejects(m.handoff(item()), /storage unavailable/);
   assert.deepEqual(calls, []);
 });
+
+test("late HTTP metadata wakes waiting downloads without weakening capture rules", async () => {
+  for (const overrides of [{}, {method: "POST"}, {hasCookie: true}, {hasAuthorization: true}]) {
+    const tracker = new RequestTracker();
+    const pending = tracker.waitFor(item().url, 100);
+    tracker.record("late", rec(overrides));
+    const observed = await pending;
+    assert.ok(observed);
+    assert.equal(decide(item(), settings, observed, OWN).capture, Object.keys(overrides).length === 0);
+  }
+});
+
+test("late redirects preserve original method; missing metadata still refuses capture", async () => {
+  const tracker = new RequestTracker();
+  tracker.record("redirect", rec({url: "https://example.org/form", method: "POST"}));
+  const pending = tracker.waitFor(item().url, 100);
+  tracker.redirect("redirect", item().url);
+  assert.equal(decide(item(), settings, await pending, OWN).capture, false);
+  const unknown = new RequestTracker();
+  assert.equal(await unknown.waitFor(item().url, 5), undefined);
+  assert.equal(decide(item(), settings, unknown.find(item().url), OWN).capture, false);
+  const afterTimeout = unknown.waitFor(item().url, 100);
+  unknown.record("later", rec());
+  assert.equal((await afterTimeout).method, "GET");
+});

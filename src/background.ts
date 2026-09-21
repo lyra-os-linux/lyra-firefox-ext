@@ -97,14 +97,16 @@ function onDownloadCreated(item: browser.downloads.DownloadItem): void {
       byExtensionId: item.byExtensionId,
     };
     if (manager.isGuarded(info)) return;
-    const decision = decide(info, settings, tracker.find(item.url), browser.runtime.id);
+    const request = settings.autoCapture ? await tracker.waitFor(item.url) : tracker.find(item.url);
+    if (manager.isGuarded(info)) return;
+    const decision = decide(info, settings, request, browser.runtime.id);
     if (!decision.capture) {
       if (settings.autoCapture) console.debug("Lyra Downloads: mantido no Firefox —", decision.reason);
       return;
     }
     const entry = await manager.handoff(info);
     if (entry.state === "repassado" && settings.showApp) void host({ op: "open_app" }, 4000);
-  }).catch(() => notify("Não foi possível concluir o repasse. Confira o painel de downloads do Firefox e tente novamente."));
+  }).catch(() => notify(t("errHandoff")));
 }
 
 function onSendHeaders(d: browser.webRequest._OnSendHeadersDetails): void {

@@ -173,5 +173,80 @@
   },
   "summaryListedTypes": {
     "message": "tipos listados"
+  },
+  "errHandoff": {
+    "message": "Não foi possível concluir o repasse. Confira o painel de downloads do Firefox e tente novamente."
+  },
+  "handoffUncertain": {
+    "message": "Não foi possível confirmar quem está baixando. A cópia do Firefox permanece pausada. Use “Recuperar no Firefox” para verificar e continuar com segurança."
+  },
+  "handoffSending": {
+    "message": "Enviando ao Lyra Downloads…"
+  },
+  "handoffCleanup": {
+    "message": "O Lyra Downloads assumiu o download, mas o Firefox não permitiu cancelar a cópia dele, que ficou pausada. Remova-a pelo painel de downloads do Firefox."
+  },
+  "handoffSent": {
+    "message": "Enviado ao Lyra Downloads."
+  },
+  "handoffInFirefox": {
+    "message": "O download já está no Firefox."
+  },
+  "handoffResumeFailed": {
+    "message": "O Firefox não conseguiu retomar o download pausado. Use “Reiniciar no Firefox” para começar de novo."
+  },
+  "handoffResumed": {
+    "message": "O download continuou no Firefox."
+  },
+  "handoffCanceled": {
+    "message": "O repasse ao Lyra Downloads foi cancelado."
+  },
+  "handoffPauseFailed": {
+    "message": "O Firefox não permitiu pausar este download (ou ele já terminou); ele continua no Firefox para evitar duas transferências."
+  },
+  "handoffRestartRequested": {
+    "message": "Reinício solicitado ao Firefox; confira o painel de downloads."
+  },
+  "handoffRestartFailed": {
+    "message": "O Firefox não conseguiu reiniciar o download. Tente novamente."
+  },
+  "handoffRestarted": {
+    "message": "Download reiniciado no Firefox (do zero)."
+  },
+  "errInvalidResponse": {
+    "message": "Resposta inválida do componente de integração."
+  },
+  "errWrongResponse": {
+    "message": "Resposta de outra requisição."
+  },
+  "errUnknown": {
+    "message": "Erro desconhecido."
+  },
+  "errHostMissing": {
+    "message": "O Lyra Downloads ou o componente de integração com o Firefox não está instalado ou registrado."
+  },
+  "errHostFailed": {
+    "message": "O componente de integração encerrou inesperadamente."
+  },
+  "errNativeUrl": {
+    "message": "Somente endereços HTTP ou HTTPS válidos sem credenciais embutidas são aceitos."
+  },
+  "errNativeDestination": {
+    "message": "Verifique a pasta de destino no Lyra Downloads."
+  },
+  "errNativeApp": {
+    "message": "Não foi possível abrir o Lyra Downloads. Verifique se o aplicativo e sua integração estão instalados."
+  },
+  "errNativeVersion": {
+    "message": "A integração instalada é incompatível. Atualize o Lyra Downloads e esta extensão."
+  },
+  "errNativeRequest": {
+    "message": "A integração recusou a solicitação."
+  },
+  "errNativeBackend": {
+    "message": "O Lyra Downloads não conseguiu concluir a operação. Abra o aplicativo para ver os detalhes."
+  },
+  "uiLocale": {
+    "message": "pt-BR"
   }
 }

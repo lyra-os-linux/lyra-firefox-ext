@@ -1,3 +1,4 @@
+import { t } from "./i18n.js";
 // Repasse durável: só devolver ao Firefox depois de confirmar que o Lyra
 // desistiu desta requisição. Respostas perdidas deixam o Firefox pausado.
 import type { DownloadInfo } from "./rules.js";
@@ -87,7 +88,7 @@ export class HandoffManager {
 
   private markUncertain(entry: HandoffEntry): void {
     entry.state = "repasse_incerto";
-    entry.message = "Não foi possível confirmar quem está baixando. A cópia do Firefox permanece pausada. Use “Recuperar no Firefox” para verificar e continuar com segurança.";
+    entry.message = t("handoffUncertain");
     entry.canRestart = false;
     entry.canRecover = true;
   }
@@ -107,7 +108,7 @@ export class HandoffManager {
     const entry: HandoffEntry = {
       requestId: this.deps.newId(), downloadId: item.id, url: item.url,
       filename: basename(item.filename), state: "enviando",
-      message: "Enviando ao Lyra Downloads…", time: this.deps.now(), canRestart: false,
+      message: t("handoffSending"), time: this.deps.now(), canRestart: false,
     };
     this.inFlight.add(item.id);
     this.ignoreIds.add(item.id);
@@ -132,11 +133,11 @@ export class HandoffManager {
     try {
       await this.deps.cancel(entry.downloadId);
     } catch {
-      await this.finish(entry, "pausado_no_firefox", "O Lyra Downloads assumiu o download, mas o Firefox não permitiu cancelar a cópia dele, que ficou pausada. Remova-a pelo painel de downloads do Firefox.");
+      await this.finish(entry, "pausado_no_firefox", t("handoffCleanup"));
       return;
     }
     try { await this.deps.erase(entry.downloadId); } catch { /* apenas histórico */ }
-    await this.finish(entry, "repassado", "Enviado ao Lyra Downloads.");
+    await this.finish(entry, "repassado", t("handoffSent"));
   }
 
   private async resume(entry: HandoffEntry, reason: string): Promise<void> {
@@ -152,13 +153,13 @@ export class HandoffManager {
         return;
       }
       if (current?.state === "complete" || (current?.state === "in_progress" && !current.paused)) {
-        await this.finish(entry, "mantido_no_firefox", "O download já está no Firefox.");
+        await this.finish(entry, "mantido_no_firefox", t("handoffInFirefox"));
         return;
       }
-      await this.finish(entry, "parado_no_firefox", `${reason} O Firefox não conseguiu retomar o download pausado. Use “Reiniciar no Firefox” para começar de novo.`, true);
+      await this.finish(entry, "parado_no_firefox", `${reason} ${t("handoffResumeFailed")}`, true);
       return;
     }
-    await this.finish(entry, "mantido_no_firefox", `${reason} O download continuou no Firefox.`);
+    await this.finish(entry, "mantido_no_firefox", `${reason} ${t("handoffResumed")}`);
   }
 
   private async reconcile(entry: HandoffEntry): Promise<void> {
@@ -168,7 +169,7 @@ export class HandoffManager {
     if (res.kind === "ok" && res.result?.revoked === true && res.result?.completed === true) {
       await this.accepted(entry);
     } else if (res.kind === "ok" && res.result?.revoked === true && res.result?.completed === false) {
-      await this.resume(entry, "O repasse ao Lyra Downloads foi cancelado.");
+      await this.resume(entry, t("handoffCanceled"));
     } else {
       this.markUncertain(entry);
       await this.save();
@@ -177,7 +178,7 @@ export class HandoffManager {
 
   private async run(entry: HandoffEntry): Promise<void> {
     try { await this.deps.pause(entry.downloadId); } catch {
-      await this.finish(entry, "mantido_no_firefox", "O Firefox não permitiu pausar este download (ou ele já terminou); ele continua no Firefox para evitar duas transferências.");
+      await this.finish(entry, "mantido_no_firefox", t("handoffPauseFailed"));
       return;
     }
     const op: HostOp = { op: "handoff", url: entry.url, suggested_filename: entry.filename };
@@ -217,7 +218,7 @@ export class HandoffManager {
       if (current?.state === "complete" || (current?.state === "in_progress" && !current.paused)) {
         entry.canRestart = false;
         entry.state = "mantido_no_firefox";
-        entry.message = "O download já está no Firefox.";
+        entry.message = t("handoffInFirefox");
         await this.save();
         return false;
       }
@@ -225,18 +226,18 @@ export class HandoffManager {
       // Antes da ação, persistir o estado incerto impede um segundo reinício
       // se a página de fundo morrer logo após downloads.download().
       entry.canRestart = false;
-      entry.message = "Reinício solicitado ao Firefox; confira o painel de downloads.";
+      entry.message = t("handoffRestartRequested");
       await this.save();
       let id: number;
       try { id = await this.deps.startDownload(entry.url); } catch {
         entry.canRestart = true;
-        entry.message = "O Firefox não conseguiu reiniciar o download. Tente novamente.";
+        entry.message = t("handoffRestartFailed");
         await this.save();
         return false;
       }
       this.ignoreIds.add(id);
       entry.state = "reiniciado_no_firefox";
-      entry.message = "Download reiniciado no Firefox (do zero).";
+      entry.message = t("handoffRestarted");
       await this.save();
       return true;
     } finally { this.inFlight.delete(entry.downloadId); }

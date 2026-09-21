@@ -1,0 +1,252 @@
+{
+  "errRecovery": {
+    "message": "Recovery could not be completed. Try again."
+  },
+  "recoverInFirefox": {
+    "message": "Recover in Firefox"
+  },
+  "extName": {
+    "message": "Lyra Downloads Integration"
+  },
+  "extDescription": {
+    "message": "Sends links and, optionally, Firefox downloads to Lyra Downloads."
+  },
+  "actionTitle": {
+    "message": "Lyra Downloads"
+  },
+  "menuSendLink": {
+    "message": "Download with Lyra Downloads"
+  },
+  "statusConnected": {
+    "message": "Connected"
+  },
+  "statusUnavailable": {
+    "message": "Application unavailable"
+  },
+  "statusEngineStopped": {
+    "message": "The download engine is not running."
+  },
+  "statusChecking": {
+    "message": "Checking…"
+  },
+  "openApp": {
+    "message": "Open Lyra Downloads"
+  },
+  "openOptions": {
+    "message": "Extension settings"
+  },
+  "recentHandoffs": {
+    "message": "Recent handoffs"
+  },
+  "restartInFirefox": {
+    "message": "Restart in Firefox"
+  },
+  "errInvalidLink": {
+    "message": "The link is not a valid address."
+  },
+  "errOnlyHttp": {
+    "message": "Only http:// and https:// links can be sent to Lyra Downloads."
+  },
+  "errTimeout": {
+    "message": "Lyra Downloads did not respond in time."
+  },
+  "optionsTitle": {
+    "message": "Lyra Downloads Integration — settings"
+  },
+  "manualTitle": {
+    "message": "Send manually"
+  },
+  "manualHelp": {
+    "message": "Right-click a link and choose “Download with Lyra Downloads”. The application opens the new download dialog; if you cancel, nothing is created."
+  },
+  "autoEnable": {
+    "message": "Use Lyra Downloads for Firefox downloads"
+  },
+  "autoHelp": {
+    "message": "Off by default. When enabled, downloads started in Firefox are handed to Lyra Downloads, and Firefox only cancels its copy after Lyra confirms. Private windows, downloads using POST or authentication, blob:/data: downloads, downloads Firefox cannot pause and, by default, those sending cookies always stay in Firefox. When enabled, Firefox requests permission to monitor requests from the selected sites. You can turn this off here or using the extension button at any time."
+  },
+  "domainsTitle": {
+    "message": "Sites"
+  },
+  "domainColumn": {
+    "message": "Domain (includes subdomains)"
+  },
+  "cookiesColumn": {
+    "message": "Capture even with cookies"
+  },
+  "cookiesHelp": {
+    "message": "Lyra Downloads does not receive your cookies. Downloads from sites where you are signed in may fail in Lyra (the Firefox copy will already have been canceled). Leave this unchecked if unsure."
+  },
+  "noRules": {
+    "message": "No sites added."
+  },
+  "addDomain": {
+    "message": "Add"
+  },
+  "remove": {
+    "message": "Remove"
+  },
+  "allowCookiesFor": {
+    "message": "Capture even with cookies on $DOMAIN$",
+    "placeholders": {
+      "domain": {
+        "content": "$1"
+      }
+    }
+  },
+  "extensionsTitle": {
+    "message": "File types"
+  },
+  "extensionsHelp": {
+    "message": "Comma-separated extensions. The file name is the one Firefox selected (including Content-Disposition), not just the end of the address."
+  },
+  "resetExtensions": {
+    "message": "Restore defaults"
+  },
+  "save": {
+    "message": "Save"
+  },
+  "saved": {
+    "message": "Settings saved."
+  },
+  "errInvalidDomain": {
+    "message": "Enter a valid domain, for example: sourceforge.net"
+  },
+  "errInvalidExtensions": {
+    "message": "Enter valid extensions, for example: iso, img, zip"
+  },
+  "errNeedDomain": {
+    "message": "Add at least one site in settings or choose “All sites”."
+  },
+  "errPermissionDenied": {
+    "message": "Permission denied; Lyra Downloads will not be used for Firefox downloads."
+  },
+  "defaultTitle": {
+    "message": "Lyra Downloads as download manager"
+  },
+  "scopeTitle": {
+    "message": "Sites"
+  },
+  "scopeAll": {
+    "message": "All sites"
+  },
+  "scopeListed": {
+    "message": "Only listed sites"
+  },
+  "cookiesAll": {
+    "message": "Capture even when the browser sends cookies"
+  },
+  "anyType": {
+    "message": "Any file type"
+  },
+  "listedTypes": {
+    "message": "Only listed types"
+  },
+  "behaviorTitle": {
+    "message": "Behavior"
+  },
+  "showApp": {
+    "message": "Show the Lyra Downloads window when receiving a download"
+  },
+  "popupDefault": {
+    "message": "Use Lyra Downloads for downloads"
+  },
+  "popupDefaultOn": {
+    "message": "On: new Firefox downloads will go to Lyra Downloads."
+  },
+  "popupDefaultOff": {
+    "message": "Off: Firefox handles downloads again."
+  },
+  "summaryAllSites": {
+    "message": "all sites"
+  },
+  "summaryListedSites": {
+    "message": "$N$ listed site(s)",
+    "placeholders": {
+      "n": {
+        "content": "$1"
+      }
+    }
+  },
+  "summaryAnyType": {
+    "message": "any type"
+  },
+  "summaryListedTypes": {
+    "message": "listed types"
+  },
+  "errHandoff": {
+    "message": "Could not complete the handoff. Check the Firefox downloads panel and try again."
+  },
+  "handoffUncertain": {
+    "message": "Could not confirm which application is downloading. The Firefox copy remains paused. Use “Recover in Firefox” to check and continue safely."
+  },
+  "handoffSending": {
+    "message": "Sending to Lyra Downloads…"
+  },
+  "handoffCleanup": {
+    "message": "Lyra Downloads took over the download, but Firefox could not cancel its paused copy. Remove it from the Firefox downloads panel."
+  },
+  "handoffSent": {
+    "message": "Sent to Lyra Downloads."
+  },
+  "handoffInFirefox": {
+    "message": "The download is already in Firefox."
+  },
+  "handoffResumeFailed": {
+    "message": "Firefox could not resume the paused download. Use “Restart in Firefox” to start again."
+  },
+  "handoffResumed": {
+    "message": "The download continued in Firefox."
+  },
+  "handoffCanceled": {
+    "message": "The handoff to Lyra Downloads was canceled."
+  },
+  "handoffPauseFailed": {
+    "message": "Firefox could not pause this download (or it already finished); it stays in Firefox to avoid duplicate transfers."
+  },
+  "handoffRestartRequested": {
+    "message": "Restart requested in Firefox; check the downloads panel."
+  },
+  "handoffRestartFailed": {
+    "message": "Firefox could not restart the download. Try again."
+  },
+  "handoffRestarted": {
+    "message": "Download restarted in Firefox (from the beginning)."
+  },
+  "errInvalidResponse": {
+    "message": "Invalid response from the integration component."
+  },
+  "errWrongResponse": {
+    "message": "Response belongs to another request."
+  },
+  "errUnknown": {
+    "message": "Unknown error."
+  },
+  "errHostMissing": {
+    "message": "Lyra Downloads or its Firefox integration component is not installed or registered."
+  },
+  "errHostFailed": {
+    "message": "The integration component stopped unexpectedly."
+  },
+  "errNativeUrl": {
+    "message": "Only valid HTTP or HTTPS addresses without embedded credentials are supported."
+  },
+  "errNativeDestination": {
+    "message": "Check the destination folder in Lyra Downloads."
+  },
+  "errNativeApp": {
+    "message": "Could not open Lyra Downloads. Check that the application and its integration are installed."
+  },
+  "errNativeVersion": {
+    "message": "The installed integration is incompatible. Update Lyra Downloads and this extension."
+  },
+  "errNativeRequest": {
+    "message": "The integration rejected the request."
+  },
+  "errNativeBackend": {
+    "message": "Lyra Downloads could not complete the operation. Open the application for details."
+  },
+  "uiLocale": {
+    "message": "en-US"
+  }
+}
